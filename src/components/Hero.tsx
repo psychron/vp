@@ -5,10 +5,14 @@ const Hero = () => {
           The Next Evolution In Palm Oil Extraction
         </h1>
         
-        {/* Logo Placeholder - Replace with actual logo */}
+        {/* Logo */}
         <div className="mb-10 flex justify-center">
-          <div className="w-48 h-48 bg-secondary rounded-lg flex items-center justify-center border border-border shadow-sm">
-            
+          <div className="w-48 h-48 flex items-center justify-center">
+            <img 
+              src="/logo.png" 
+              alt="Logo" 
+              className="w-full h-full object-contain rounded-lg border border-border shadow-sm"
+            />
           </div>
         </div>
 
