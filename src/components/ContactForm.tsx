@@ -52,11 +52,15 @@ const ContactForm = () => {
 
     try {
       // Google Apps Script submission
-      const response = await fetch(https://script.google.com/macros/s/AKfycbycn9k6-H2gTf-BT4sYkPJQlGvVJJ0s8w1eRLP4YzBfVlogbyWFNFzUg8NtuBuEejo/exec, {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbycn9k6-H2gTf-BT4sYkPJQlGvVJJ0s8w1eRLP4YzBfVlogbyWFNFzUg8NtuBuEejo/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
+      // Logging result for debugging
+      const result = await response.json();
+      console.log(result);
 
       if (response.ok) {
         toast({
