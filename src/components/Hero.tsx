@@ -7,12 +7,8 @@ const Hero = () => {
         
         {/* Logo */}
         <div className="mb-10 flex justify-center">
-          <div className="w-48 h-48 flex items-center justify-center">
-            <img 
-              src="/logo.png" 
-              alt="Logo" 
-              className="w-full h-full object-contain rounded-lg border border-border shadow-sm"
-            />
+          <div className="w-48 h-48 flex items-center justify-center shadow-none">
+            <img src="/logo.png" alt="Logo" className="w-full h-full object-contain rounded-lg border border-border shadow-sm" />
           </div>
         </div>
 
