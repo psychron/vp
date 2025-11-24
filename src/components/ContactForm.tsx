@@ -51,17 +51,11 @@ const ContactForm = () => {
     }
 
     try {
-      // Netlify form submission
-      const netlifyForm = new FormData();
-      netlifyForm.append("form-name", "contact");
-      Object.entries(formData).forEach(([key, value]) => {
-        netlifyForm.append(key, value);
-      });
-
-      const response = await fetch("/", {
+      // Google Apps Script submission
+      const response = await fetch("https://script.google.com/macros/s/AKfycbycn9k6-H2gTf-BT4sYkPJQlGvVJJ0s8w1eRLP4YzBfVlogbyWFNFzUg8NtuBuEejo/exec", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(netlifyForm as any).toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
@@ -112,22 +106,11 @@ const ContactForm = () => {
           </p>
         </div>
 
-        {/* Hidden Netlify form for form detection */}
-        <form name="contact" data-netlify="true" hidden>
-          <input type="text" name="name" />
-          <input type="text" name="company" />
-          <input type="email" name="email" />
-          <select name="interest">
-            <option value="">Select an option</option>
-          </select>
-          <textarea name="message"></textarea>
-        </form>
+        {/* Removed hidden Netlify form */}
 
         <form
           onSubmit={handleSubmit}
           className="bg-card rounded-lg shadow-lg p-8 space-y-6 border border-border"
-          data-netlify="true"
-          name="contact"
         >
           <div className="space-y-2">
             <Label htmlFor="name" className="text-foreground font-medium">
@@ -223,36 +206,6 @@ const ContactForm = () => {
             {isSubmitting ? "Submitting..." : "Submit Inquiry"}
           </Button>
         </form>
-
-        {/* Alternative: Google Apps Script endpoint (commented out)
-        To use Google Apps Script instead:
-        1. Create a Google Sheet
-        2. Go to Extensions > Apps Script
-        3. Replace Code.gs with:
-        
-        function doPost(e) {
-          var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-          var data = JSON.parse(e.postData.contents);
-          sheet.appendRow([
-            new Date(),
-            data.name,
-            data.company,
-            data.email,
-            data.interest,
-            data.message
-          ]);
-          return ContentService.createTextOutput(JSON.stringify({success: true}))
-            .setMimeType(ContentService.MimeType.JSON);
-        }
-        
-        4. Deploy as Web App (Anyone can access)
-        5. Replace the fetch URL below with your script URL
-        
-        const response = await fetch("YOUR_GOOGLE_SCRIPT_URL", {
-          method: "POST",
-          body: JSON.stringify(formData),
-        });
-        */}
       </div>
     </section>
   );
