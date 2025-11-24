@@ -82,7 +82,7 @@ const ContactForm = () => {
       } else {
         toast({
           title: "Submission Error",
-          description: `Something went wrong: ${result.error || "Unknown error"}`,
+          description: `Please email us at info@virginpalm.com. Something went wrong: ${result.error || "Unknown error"}`,
           variant: "destructive",
         });
       }
