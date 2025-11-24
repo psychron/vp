@@ -58,16 +58,22 @@ const ContactForm = () => {
         body: JSON.stringify(formData),
       });
 
-      // Logging result for debugging
-      const result = await response.json();
-      console.log(result);
+      let result;
+      try {
+        result = await response.json();
+      } catch (jsonError) {
+        console.error("Failed to parse JSON from Apps Script:", jsonError);
+        result = { success: false, error: "Invalid JSON response" };
+      }
 
-      if (response.ok) {
+      console.log("Apps Script response:", result);
+
+      if (response.ok && result.success) {
         toast({
           title: "Thank you for your interest!",
           description: "We'll get back to you shortly.",
         });
-        
+
         // Reset form
         setFormData({
           name: "",
@@ -77,13 +83,19 @@ const ContactForm = () => {
           message: "",
         });
       } else {
-        throw new Error("Form submission failed");
+        const errorMsg = result?.error || "Unknown error";
+        console.error("Form submission failed:", errorMsg);
+        toast({
+          title: "Submission Error",
+          description: `Something went wrong: ${errorMsg}`,
+          variant: "destructive",
+        });
       }
-    } catch (error) {
-      console.error("Form submission error:", error);
+    } catch (error: any) {
+      console.error("Network or fetch error:", error);
       toast({
         title: "Submission Error",
-        description: "Something went wrong. Please try again or contact us directly.",
+        description: `Something went wrong: ${error.message}`,
         variant: "destructive",
       });
     } finally {
@@ -105,114 +117,3 @@ const ContactForm = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Get in Touch
           </h2>
-          <p className="text-lg text-muted-foreground">
-            Interested in learning more? Let us know how we can help.
-          </p>
-        </div>
-
-        {/* Removed hidden Netlify form */}
-
-        <form
-          onSubmit={handleSubmit}
-          className="bg-card rounded-lg shadow-lg p-8 space-y-6 border border-border"
-        >
-          <div className="space-y-2">
-            <Label htmlFor="name" className="text-foreground font-medium">
-              Name <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="name"
-              name="name"
-              type="text"
-              required
-              value={formData.name}
-              onChange={handleInputChange}
-              className="bg-background border-input"
-              placeholder="Your full name"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="company" className="text-foreground font-medium">
-              Company
-            </Label>
-            <Input
-              id="company"
-              name="company"
-              type="text"
-              value={formData.company}
-              onChange={handleInputChange}
-              className="bg-background border-input"
-              placeholder="Your company name"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-foreground font-medium">
-              Email <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              required
-              value={formData.email}
-              onChange={handleInputChange}
-              className="bg-background border-input"
-              placeholder="your.email@company.com"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="interest" className="text-foreground font-medium">
-              Area of Interest <span className="text-destructive">*</span>
-            </Label>
-            <Select
-              name="interest"
-              required
-              value={formData.interest}
-              onValueChange={(value) =>
-                setFormData((prev) => ({ ...prev, interest: value }))
-              }
-            >
-              <SelectTrigger className="bg-background border-input">
-                <SelectValue placeholder="Select an option" />
-              </SelectTrigger>
-              <SelectContent className="bg-popover border-border">
-                <SelectItem value="pilot-trials">Pilot Trials</SelectItem>
-                <SelectItem value="licensing">Licensing</SelectItem>
-                <SelectItem value="investment">Investment</SelectItem>
-                <SelectItem value="collaboration">Collaboration</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="message" className="text-foreground font-medium">
-              Message
-            </Label>
-            <Textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleInputChange}
-              className="bg-background border-input min-h-[120px] resize-none"
-              placeholder="Tell us more about your interest..."
-            />
-          </div>
-
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-6 text-lg transition-all duration-200 shadow-md hover:shadow-lg"
-          >
-            {isSubmitting ? "Submitting..." : "Submit Inquiry"}
-          </Button>
-        </form>
-      </div>
-    </section>
-  );
-};
-
-export default ContactForm;
