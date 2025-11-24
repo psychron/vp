@@ -184,4 +184,40 @@ const ContactForm = () => {
                 <SelectValue placeholder="Select an option" />
               </SelectTrigger>
               <SelectContent className="bg-popover border-border">
-                <SelectItem value="pilot-trials">Pilo
+                <SelectItem value="pilot-trials">Pilot Trials</SelectItem>
+                <SelectItem value="licensing">Licensing</SelectItem>
+                <SelectItem value="investment">Investment</SelectItem>
+                <SelectItem value="collaboration">Collaboration</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="message" className="text-foreground font-medium">
+              Message
+            </Label>
+            <Textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              className="bg-background border-input min-h-[120px] resize-none"
+              placeholder="Tell us more about your interest..."
+            />
+          </div>
+
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-6 text-lg transition-all duration-200 shadow-md hover:shadow-lg"
+          >
+            {isSubmitting ? "Submitting..." : "Submit Inquiry"}
+          </Button>
+        </form>
+      </div>
+    </section>
+  );
+};
+
+export default ContactForm;
