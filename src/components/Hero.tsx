@@ -1,3 +1,4 @@
+import logo from "@/logo.png";
 const Hero = () => {
   return <section className="pt-16 pb-12 px-4 sm:px-6 lg:px-8 animate-fade-in">
       <div className="max-w-3xl mx-auto text-center">
@@ -8,7 +9,7 @@ const Hero = () => {
         {/* Logo */}
         <div className="mb-10 flex justify-center shadow-none rounded-none">
           <div className="w-48 h-48 flex items-center justify-center shadow-none rounded-none">
-            <img src="/logo.png" alt="Logo" className="w-full h-full object-contain" />
+            <img src={logo} alt="Logo" className="w-full h-full object-contain" />
           </div>
         </div>
 
