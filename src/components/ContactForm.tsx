@@ -54,7 +54,7 @@ const ContactForm = () => {
       const formBody = new URLSearchParams(formData as any).toString();
 
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbxhYL6eHkh-SLZyIL6T9GvayEaW_v44m3mN-0JoeJKNPs-TFhqovacrL_IcmLtFUSlK/exec",
+        "https://script.google.com/macros/s/AKfycbw1YYoTEwQEh4U0Sq9H2kRMa5Lc5kF7f22XLvaI7SAS6iQAe3HAd4PgyEPPoclyQKN1/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
